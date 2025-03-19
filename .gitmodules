@@ -1,0 +1,3 @@
+[submodule "performance-exporter/performance-exporter"]
+	path = performance-exporter/performance-exporter
+	url = https://github.com/project-cdim/performance-exporter.git

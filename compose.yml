@@ -1,0 +1,43 @@
+services:
+  performance-exporter:
+    build:
+      context: .
+      dockerfile: ./performance-exporter/Dockerfile
+    container_name: performance-exporter
+    tty: true
+    ports:
+      - 8285:8080
+      - 3512:3500
+    networks:
+      - cdim-net
+    volumes:
+      - performance-exporter-log:/var/log/cdim
+      - ./performance-exporter/performance-exporter:/app
+    logging:
+      options:
+        max-size: 50m
+
+  performance-exporter-dapr:
+    image: daprio/daprd:edge
+    container_name: performance-exporter-dapr
+    command:
+      [
+        "./daprd",
+        "-app-id", "performance-exporter",
+        "-app-port", "8080",
+        "-dapr-http-port", "3500",
+        "-placement-host-address", "placement:50006",
+      ]
+    depends_on:
+      - performance-exporter
+    network_mode: "service:performance-exporter"
+    logging:
+      options:
+        max-size: 50m
+
+networks:
+  cdim-net:
+    external: true
+
+volumes:
+  performance-exporter-log:
