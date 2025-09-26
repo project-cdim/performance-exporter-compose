@@ -13,6 +13,7 @@ services:
     volumes:
       - performance-exporter-log:/var/log/cdim
       - ./performance-exporter/performance-exporter:/app
+      - ./performance-exporter/configs/:/app/configs
     logging:
       options:
         max-size: 50m
