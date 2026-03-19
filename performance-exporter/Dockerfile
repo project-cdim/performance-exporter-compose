@@ -1,6 +1,6 @@
 FROM golang:1.24-alpine3.22
 
-# upgrading packages
+# upgrading packages and installing curl
 RUN apk update && \
     apk upgrade --available && \
     apk add --no-cache \
